@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Question For You...</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow: hidden; /* Hide scrollbars */
+        }
+        .font-pacifico {
+            font-family: 'Pacifico', cursive;
+        }
+        #no-button {
+            transition: all 0.3s ease;
+        }
+        .heart {
+            position: fixed;
+            font-size: 2rem;
+            animation: fall 5s linear infinite;
+            color: #ff7e9f; /* A soft pink for hearts */
+        }
+        @keyframes fall {
+            0% { top: -10vh; opacity: 1; }
+            100% { top: 110vh; opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-pink-100 flex items-center justify-center h-screen">
+
+    <div id="main-content" class="text-center p-8 bg-white rounded-2xl shadow-xl transition-opacity duration-500">
+        <img id="main-image" src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" class="mx-auto rounded-2xl mb-6 h-48" alt="Cute bear blowing a kiss">
+        <h1 class="text-4xl font-pacifico text-gray-800 mb-6"> iu hong nạ? </h1>
+        <div class="flex justify-center items-center gap-4">
+            <button id="yes-button" class="bg-pink-400 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                iu lắm nạ!
+            </button>
+            <button id="no-button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                Hong!
+            </button>
+        </div>
+    </div>
+
+    <div id="success-message" class="hidden text-center p-8">
+        <h1 class="text-6xl font-pacifico text-red-500 mb-8">Bé cũng iu nàng nhắm! 🥰</h1>
+        <img src="https://media.tenor.com/I_3-i2z3uJ8AAAAi/milk-and-mocha-hug.gif" class="mx-auto rounded-2xl" alt="Cute bears hugging">
+    </div>
+
+    <script>
+        const yesButton = document.getElementById('yes-button');
+        const noButton = document.getElementById('no-button');
+        const mainContent = document.getElementById('main-content');
+        const successMessage = document.getElementById('success-message');
+        const mainImage = document.getElementById('main-image');
+
+        noMessages = "nạ"
+        let noCount = 0;
+        let yesButtonSize = 1;
+
+        noButton.addEventListener('click', () => {
+            noButton.innerText = noMessages;
+            noMessages = noMessages.slice(0, noMessages.length - 1) + " nạ"+ "?";
+    
+            noCount++;
+            noButton.style.position = 'relative';
+            noButton.style.left = `${Math.random() * 400 - 100}px`;
+            noButton.style.top = `${Math.random() * 400 - 100}px`;
+            noButton.style.transform = `rotate(${Math.random() * 60 - 30}deg)`;
+
+            yesButtonSize += 0.1;
+            yesButton.style.transform = `scale(${yesButtonSize})`;
+        });
+
+        yesButton.addEventListener('click', () => {
+            // Fade out the question and buttons
+            mainContent.style.opacity = '0';
+
+            setTimeout(() => {
+                mainContent.classList.add('hidden');
+                successMessage.classList.remove('hidden');
+                createFallingHearts();
+            }, 500); // Wait for fade-out transition
+        });
+
+        function createFallingHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.animationDuration = `${Math.random() * 2 + 3}s`; // Vary the speed
+                document.body.appendChild(heart);
+
+                // Remove the heart after it falls
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000);
+            }, 300);
+        }
+    </script>
+</body>
+</html>
+
+
